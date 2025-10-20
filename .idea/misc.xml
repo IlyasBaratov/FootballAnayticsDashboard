@@ -4,4 +4,7 @@
     <option name="sdkName" value="Python 3.14 (footballDashboard)" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
+  <component name="PythonCompatibilityInspectionAdvertiser">
+    <option name="version" value="3" />
+  </component>
 </project>
