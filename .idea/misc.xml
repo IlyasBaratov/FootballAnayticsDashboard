@@ -4,8 +4,4 @@
     <option name="sdkName" value="Python 3.14 (footballDashboard)" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.14 (footballDashboard)" project-jdk-type="Python SDK" />
 </project>
