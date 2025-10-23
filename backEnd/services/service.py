@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 from collections.abc import Sequence
 from dataclasses import is_dataclass, asdict
 from typing import Optional, TypeVar, Generic, Any, List, Union, Dict
-from __future__ import annotations
 from pydantic.v1 import BaseModel
 from sqlalchemy.orm import Session
 from sqlalchemy.testing import exclude

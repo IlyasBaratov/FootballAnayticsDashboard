@@ -451,7 +451,7 @@ class News(Base):
     url: Mapped[Optional[str]] = mapped_column(Text)
     published_at: Mapped[Optional[DateTime]] = mapped_column(DateTime(timezone=True))
     tags: Mapped[Optional[List[str]]] = mapped_column(ARRAY(Text))
-    metadata: Mapped[Optional[dict]] = mapped_column(JSONB)
+    metadatas: Mapped[Optional[dict]] = mapped_column(JSONB)
     created_at: Mapped[Optional[DateTime]] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 

@@ -4,19 +4,21 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
 import os
 
+from backEnd.api.dependencies import *
+
 # Do NOT rely on load_dotenv inside containers; compose injects env vars.
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql+psycopg2://postgres:postgres@db:5432/football_analytics"
-)
-
-if not DATABASE_URL:
-    # Extra guard; logs help if something is wrong
-    raise RuntimeError("DATABASE_URL is not set")
-
-engine = create_engine(DATABASE_URL, pool_pre_ping=True)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+# DATABASE_URL = os.getenv(
+#     "DATABASE_URL",
+#     "postgresql+psycopg2://postgres:postgres@db:5432/football_analytics"
+# )
+#
+# if not DATABASE_URL:
+#     # Extra guard; logs help if something is wrong
+#     raise RuntimeError("DATABASE_URL is not set")
+#
+# engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+# SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# Base = declarative_base()
 
 app = FastAPI(title="Football Analytics API")
 
