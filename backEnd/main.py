@@ -20,12 +20,12 @@ Base = declarative_base()
 
 app = FastAPI(title="Football Analytics API")
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# def get_db():
+#     db = SessionLocal()
+#     try:
+#         yield db
+#     finally:
+#         db.close()
 
 @app.get("/")
 def root():
