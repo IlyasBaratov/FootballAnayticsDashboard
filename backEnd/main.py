@@ -4,6 +4,8 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
 import os
 
+from starlette.responses import JSONResponse
+
 from backEnd.api.dependencies import *
 
 # Do NOT rely on load_dotenv inside containers; compose injects env vars.
