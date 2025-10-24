@@ -1,4 +1,6 @@
-# models.py
+"""
+SQLAlchemy ORM models for Football Analytics application.
+"""
 from __future__ import annotations
 
 from typing import List, Optional
@@ -9,16 +11,9 @@ from sqlalchemy import (
     UniqueConstraint, ForeignKey, Index, text, func
 )
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID, JSONB, ARRAY
-from sqlalchemy.orm import (
-    Mapped, mapped_column, relationship, DeclarativeBase
-)
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-# If you already have Base in backEnd.main, use that import and delete the fallback Base below.
-# from backEnd.main import Base
-
-# Fallback Base (uncomment if you don't import Base elsewhere):
-class Base(DeclarativeBase):
-    pass
+from backEnd.core.database import Base
 
 
 # ---------- 1. Reference tables ----------

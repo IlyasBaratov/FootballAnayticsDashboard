@@ -1,52 +1,44 @@
+"""
+Dependency injection for FastAPI endpoints.
+"""
 from typing import Generator
-from fastapi import FastAPI, Depends
-from sqlalchemy import create_engine, text
-from sqlalchemy.orm import sessionmaker, declarative_base, Session
-import os
-import httpx
+
 from fastapi import Depends
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.orm import Session
 
-# from backEnd.main import SessionLocal
-from backEnd.services.service import *
-
+from backEnd.core.database import get_db
 from backEnd.models.model import League, Team, Fixture, Player
 from backEnd.repository.rep import Repository
-
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql+psycopg2://postgres:postgres@db:5432/football_analytics"
+from backEnd.services.service import (
+    LeagueService, 
+    PlayerService, 
+    FixtureService, 
+    TeamService
 )
+from backEnd.controllers.football_controller import FootballController
 
-if not DATABASE_URL:
-    # Extra guard; logs help if something is wrong
-    raise RuntimeError("DATABASE_URL is not set")
 
-engine = create_engine(DATABASE_URL, pool_pre_ping=True)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-def get_db()-> Generator[Session, None, None]:
-    db = SessionLocal()
-    try:
-        yield db
-        db.commit()
-    except Exception:
-        db.rollback()
-        raise
-    finally:
-        db.close()
-
-def getLeagueService(db: Session = Depends(get_db)) -> LeagueService:
+def get_league_service(db: Session = Depends(get_db)) -> LeagueService:
+    """Get league service instance."""
     return LeagueService(repository=Repository(League), db=db)
-def getTeamService(db: Session = Depends(get_db)) -> TeamService:
+
+
+def get_team_service(db: Session = Depends(get_db)) -> TeamService:
+    """Get team service instance."""
     return TeamService(repository=Repository(Team), db=db)
-def getFixtureService(db: Session = Depends(get_db)) -> FixtureService:
+
+
+def get_fixture_service(db: Session = Depends(get_db)) -> FixtureService:
+    """Get fixture service instance."""
     return FixtureService(repository=Repository(Fixture), db=db)
-def getPlayerService(db: Session = Depends(get_db)) -> PlayerService:
+
+
+def get_player_service(db: Session = Depends(get_db)) -> PlayerService:
+    """Get player service instance."""
     return PlayerService(repository=Repository(Player), db=db)
-async def get_http_client() -> httpx.AsyncClient:
-    timeout = httpx.Timeout(15.0)  # seconds
-    limits = httpx.Limits(max_connections=100, max_keepalive_connections=20)
-    async with httpx.AsyncClient(timeout=timeout, limits=limits) as client:
-        yield client
+
+
+def get_football_controller(db: Session = Depends(get_db)) -> FootballController:
+    """Get football controller instance for API-Football integration."""
+    return FootballController(db=db)
+
