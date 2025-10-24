@@ -311,14 +311,6 @@ pytest --cov=backEnd
 - **[MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)** - Migration from old structure
 - **[REFACTORING_SUMMARY.md](REFACTORING_SUMMARY.md)** - What was changed
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ### Code Style
 - Follow PEP 8
 - Use type hints
@@ -343,13 +335,6 @@ pytest --cov=backEnd
 - ✅ Handle errors appropriately
 - ✅ Write tests
 
-## 🔒 Security
-
-- Environment-based configuration
-- SQL injection protection via ORM
-- Input validation with Pydantic
-- CORS configuration
-- Database connection pooling
 
 **TODO**: Add authentication & authorization
 
@@ -367,9 +352,7 @@ pytest --cov=backEnd
 - [ ] Add advanced analytics features
 
 ## 📄 License
-
-[Your License Here]
-
+----
 ## 👥 Authors
 
 **Ilyas Baratov** - [GitHub](https://github.com/IlyasBaratov)
