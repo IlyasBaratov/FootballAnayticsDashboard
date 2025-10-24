@@ -21,6 +21,10 @@ from core.config import get_settings
 logger = logging.getLogger(__name__)
 settings = get_settings()
 
+# load .env variables
+from dotenv import load_dotenv
+load_dotenv()
+
 
 class APIFootballError(Exception):
     """Base exception for API-Football errors."""

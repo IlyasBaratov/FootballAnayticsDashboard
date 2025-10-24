@@ -2,9 +2,24 @@
 Application configuration management using environment variables.
 """
 import os
+from pathlib import Path
+try:
+    # Load .env early so os.getenv and pydantic BaseSettings can pick up values
+    from dotenv import load_dotenv
+    # Search for .env in the project root and backEnd folder
+    env_paths = [Path(__file__).resolve().parents[1] / '.env', Path(__file__).resolve().parents[0] / '.env']
+    for p in env_paths:
+        if p.exists():
+            load_dotenv(dotenv_path=p)
+            break
+except Exception:
+    # If python-dotenv isn't installed or loading fails, we still continue
+    pass
 from functools import lru_cache
-from typing import Optional
+from typing import Optional, Union
+import json
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings
 
 
@@ -28,10 +43,27 @@ class Settings(BaseSettings):
     db_pool_pre_ping: bool = True
     
     # CORS
-    cors_origins: list[str] = ["*"]
+    cors_origins: Union[list[str], str] = ["*"]
     cors_credentials: bool = True
-    cors_methods: list[str] = ["*"]
-    cors_headers: list[str] = ["*"]
+    cors_methods: Union[list[str], str] = ["*"]
+    cors_headers: Union[list[str], str] = ["*"]
+    
+    @field_validator("cors_origins", "cors_methods", "cors_headers", mode="before")
+    @classmethod
+    def parse_cors_list(cls, v):
+        """Parse CORS configuration from environment variable."""
+        if isinstance(v, str):
+            # Handle empty string
+            if not v or v.strip() == "":
+                return ["*"]
+            # Try to parse as JSON
+            try:
+                parsed = json.loads(v)
+                return parsed if isinstance(parsed, list) else [parsed]
+            except json.JSONDecodeError:
+                # If not JSON, treat as comma-separated string
+                return [item.strip() for item in v.split(",") if item.strip()]
+        return v
     
     # API-Football Configuration
     api_football_key: str = os.getenv("API_FOOTBALL_KEY", "")
