@@ -6,10 +6,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from backEnd.core.config import get_settings
-from backEnd.core.database import get_db
-from backEnd.api.routers import api_router
-from backEnd.api.errors import (
+from core.config import get_settings
+from core.database import get_db
+from api.routers import api_router
+from api.errors import (
     NotFoundError,
     ConflictError,
     ValidationError,

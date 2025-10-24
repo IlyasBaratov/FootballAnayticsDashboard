@@ -1,11 +1,447 @@
-# Test your FastAPI endpoints
+# Football Analytics Dashboard - API Tests
+# Use REST Client extension in VS Code to execute these requests
+# Base URL: http://localhost:8000
 
-GET http://127.0.0.1:8000/
+@baseUrl = http://localhost:8000
+@apiUrl = {{baseUrl}}/api/v1
+
+### ==============================================
+### HEALTH & SYSTEM CHECKS
+### ==============================================
+
+### Health Check
+GET {{baseUrl}}/
 Accept: application/json
 
-###
+### API Documentation (Swagger UI)
+GET {{baseUrl}}/docs
 
-GET http://127.0.0.1:8000/hello/User
+### ==============================================
+### LIVE & REAL-TIME DATA
+### ==============================================
+
+### Get All Live Matches
+GET {{apiUrl}}/matches/live
 Accept: application/json
 
-###
+### Get Today's Matches
+GET {{apiUrl}}/matches/today
+Accept: application/json
+
+### Get Matches by Specific Date
+GET {{apiUrl}}/matches/date/2024-10-24
+Accept: application/json
+
+### Get Matches by Date Range (via League)
+GET {{apiUrl}}/matches/league/39?season=2023&from_date=2024-01-01&to_date=2024-01-31
+Accept: application/json
+
+### Get Team Fixtures (Manchester United - ID: 33)
+GET {{apiUrl}}/matches/team/33?season=2023&last=5
+Accept: application/json
+
+### Get Team's Next Fixtures
+GET {{apiUrl}}/matches/team/50?next=5
+Accept: application/json
+
+### Get Specific Match Details
+GET {{apiUrl}}/matches/1035346
+Accept: application/json
+
+### Get Match Details with Statistics
+GET {{apiUrl}}/matches/1035346?include_statistics=true&include_events=true&include_lineups=true
+Accept: application/json
+
+### Get Match Statistics Only
+GET {{apiUrl}}/matches/1035346/statistics
+Accept: application/json
+
+### Get Match Events (Goals, Cards, Subs)
+GET {{apiUrl}}/matches/1035346/events
+Accept: application/json
+
+### Get Match Lineups
+GET {{apiUrl}}/matches/1035346/lineups
+Accept: application/json
+
+### Head-to-Head: Manchester United vs Manchester City
+GET {{apiUrl}}/matches/h2h/33/50?last=10
+Accept: application/json
+
+### ==============================================
+### LEAGUE STANDINGS
+### ==============================================
+
+### Premier League Standings 2023
+GET {{apiUrl}}/standings/39?season=2023
+Accept: application/json
+
+### La Liga Standings 2023
+GET {{apiUrl}}/standings/140?season=2023
+Accept: application/json
+
+### Bundesliga Standings 2023
+GET {{apiUrl}}/standings/78?season=2023
+Accept: application/json
+
+### Serie A Standings 2023
+GET {{apiUrl}}/standings/135?season=2023
+Accept: application/json
+
+### Ligue 1 Standings 2023
+GET {{apiUrl}}/standings/61?season=2023
+Accept: application/json
+
+### Champions League Standings 2023
+GET {{apiUrl}}/standings/2?season=2023
+Accept: application/json
+
+### Specific Team Standing (Manchester City in Premier League)
+GET {{apiUrl}}/standings/39?season=2023&team_id=50
+Accept: application/json
+
+### ==============================================
+### STATISTICS
+### ==============================================
+
+### Team Statistics (Manchester City)
+GET {{apiUrl}}/statistics/team/50?league_id=39&season=2023
+Accept: application/json
+
+### Team Statistics (Real Madrid in La Liga)
+GET {{apiUrl}}/statistics/team/541?league_id=140&season=2023
+Accept: application/json
+
+### Premier League Top Scorers 2023
+GET {{apiUrl}}/statistics/top-scorers/39?season=2023
+Accept: application/json
+
+### La Liga Top Scorers 2023
+GET {{apiUrl}}/statistics/top-scorers/140?season=2023
+Accept: application/json
+
+### Bundesliga Top Scorers 2023
+GET {{apiUrl}}/statistics/top-scorers/78?season=2023
+Accept: application/json
+
+### Premier League Top Assists 2023
+GET {{apiUrl}}/statistics/top-assists/39?season=2023
+Accept: application/json
+
+### La Liga Top Assists 2023
+GET {{apiUrl}}/statistics/top-assists/140?season=2023
+Accept: application/json
+
+### Search Players by Name
+GET {{apiUrl}}/statistics/players/search?query=Messi
+Accept: application/json
+
+### Search Players with League Filter
+GET {{apiUrl}}/statistics/players/search?query=Ronaldo&league_id=140&season=2023
+Accept: application/json
+
+### Search Players (Haaland)
+GET {{apiUrl}}/statistics/players/search?query=Haaland
+Accept: application/json
+
+### ==============================================
+### PREDICTIONS
+### ==============================================
+
+### Match Predictions
+GET {{apiUrl}}/predictions/1035346
+Accept: application/json
+
+### ==============================================
+### LEAGUES (CRUD OPERATIONS)
+### ==============================================
+
+### List All Leagues
+GET {{apiUrl}}/leagues?limit=20&offset=0
+Accept: application/json
+
+### Get Specific League (Premier League)
+GET {{apiUrl}}/leagues/39
+Accept: application/json
+
+### Get League Seasons
+GET {{apiUrl}}/leagues/39/seasons
+Accept: application/json
+
+### Create New League
+POST {{apiUrl}}/leagues
+Content-Type: application/json
+
+{
+  "id": 999,
+  "name": "Test League",
+  "country": "Test Country",
+  "type": "League",
+  "logo": "https://example.com/logo.png"
+}
+
+### Update League
+PUT {{apiUrl}}/leagues/999
+Content-Type: application/json
+
+{
+  "name": "Updated Test League",
+  "country": "Updated Country"
+}
+
+### Delete League
+DELETE {{apiUrl}}/leagues/999
+
+### ==============================================
+### TEAMS (CRUD OPERATIONS)
+### ==============================================
+
+### List All Teams
+GET {{apiUrl}}/teams?limit=20&offset=0
+Accept: application/json
+
+### Get Specific Team (Manchester United)
+GET {{apiUrl}}/teams/33
+Accept: application/json
+
+### Get Team Fixtures
+GET {{apiUrl}}/teams/33/fixtures
+Accept: application/json
+
+### Create New Team
+POST {{apiUrl}}/teams
+Content-Type: application/json
+
+{
+  "id": 99999,
+  "name": "Test Team",
+  "short_code": "TST",
+  "country": "England",
+  "founded": 2024,
+  "national": false
+}
+
+### Update Team
+PUT {{apiUrl}}/teams/99999
+Content-Type: application/json
+
+{
+  "name": "Updated Test Team",
+  "short_code": "UTT"
+}
+
+### Delete Team
+DELETE {{apiUrl}}/teams/99999
+
+### ==============================================
+### PLAYERS (CRUD OPERATIONS)
+### ==============================================
+
+### List All Players
+GET {{apiUrl}}/players?limit=20&offset=0
+Accept: application/json
+
+### Get Specific Player
+GET {{apiUrl}}/players/1
+Accept: application/json
+
+### Create New Player
+POST {{apiUrl}}/players
+Content-Type: application/json
+
+{
+  "id": 99999,
+  "firstname": "Test",
+  "lastname": "Player",
+  "name": "Test Player",
+  "nationality": "England",
+  "birth_date": "1995-01-01",
+  "height": "180",
+  "weight": "75",
+  "position": "Forward"
+}
+
+### Update Player
+PUT {{apiUrl}}/players/99999
+Content-Type: application/json
+
+{
+  "firstname": "Updated",
+  "lastname": "Player"
+}
+
+### Delete Player
+DELETE {{apiUrl}}/players/99999
+
+### ==============================================
+### FIXTURES (CRUD OPERATIONS)
+### ==============================================
+
+### List All Fixtures
+GET {{apiUrl}}/fixtures?limit=20&offset=0
+Accept: application/json
+
+### Get Specific Fixture
+GET {{apiUrl}}/fixtures/1
+Accept: application/json
+
+### Create New Fixture
+POST {{apiUrl}}/fixtures
+Content-Type: application/json
+
+{
+  "id": 99999,
+  "league_id": 39,
+  "season_id": "uuid-here",
+  "home_team_id": 33,
+  "away_team_id": 50,
+  "match_date": "2024-10-24T15:00:00Z",
+  "status": "NS",
+  "referee": "Test Referee"
+}
+
+### Update Fixture
+PUT {{apiUrl}}/fixtures/99999
+Content-Type: application/json
+
+{
+  "status": "FT",
+  "home_score": 2,
+  "away_score": 1
+}
+
+### Delete Fixture
+DELETE {{apiUrl}}/fixtures/99999
+
+### ==============================================
+### POPULAR LEAGUE IDs FOR REFERENCE
+### ==============================================
+
+# England
+# - Premier League: 39
+# - Championship: 40
+
+# Spain
+# - La Liga: 140
+# - Segunda División: 141
+
+# Germany
+# - Bundesliga: 78
+# - 2. Bundesliga: 79
+
+# Italy
+# - Serie A: 135
+# - Serie B: 136
+
+# France
+# - Ligue 1: 61
+# - Ligue 2: 62
+
+# Europe
+# - Champions League: 2
+# - Europa League: 3
+# - Conference League: 848
+
+# International
+# - World Cup: 1
+# - Euro Championship: 4
+
+### ==============================================
+### POPULAR TEAM IDs FOR REFERENCE
+### ==============================================
+
+# England
+# - Manchester United: 33
+# - Manchester City: 50
+# - Liverpool: 40
+# - Chelsea: 49
+# - Arsenal: 42
+# - Tottenham: 47
+
+# Spain
+# - Real Madrid: 541
+# - Barcelona: 529
+# - Atletico Madrid: 530
+
+# Germany
+# - Bayern Munich: 157
+# - Borussia Dortmund: 165
+
+# Italy
+# - Juventus: 496
+# - AC Milan: 489
+# - Inter Milan: 505
+
+# France
+# - PSG: 85
+# - Marseille: 81
+
+### ==============================================
+### TESTING SCENARIOS
+### ==============================================
+
+### Scenario 1: Build a Match Dashboard
+# 1. Get today's matches
+GET {{apiUrl}}/matches/today
+
+# 2. Get live matches
+GET {{apiUrl}}/matches/live
+
+# 3. Get match details for a specific match
+GET {{apiUrl}}/matches/1035346?include_statistics=true&include_events=true
+
+### Scenario 2: League Standings Page
+# 1. Get Premier League standings
+GET {{apiUrl}}/standings/39?season=2023
+
+# 2. Get top scorers
+GET {{apiUrl}}/statistics/top-scorers/39?season=2023
+
+# 3. Get top assists
+GET {{apiUrl}}/statistics/top-assists/39?season=2023
+
+### Scenario 3: Team Profile Page
+# 1. Get team details
+GET {{apiUrl}}/teams/50
+
+# 2. Get team statistics
+GET {{apiUrl}}/statistics/team/50?league_id=39&season=2023
+
+# 3. Get team fixtures
+GET {{apiUrl}}/matches/team/50?season=2023&last=5
+
+# 4. Get team's next fixtures
+GET {{apiUrl}}/matches/team/50?next=5
+
+### Scenario 4: Match Preview
+# 1. Get match details
+GET {{apiUrl}}/matches/1035346
+
+# 2. Get match predictions
+GET {{apiUrl}}/predictions/1035346
+
+# 3. Get head-to-head
+GET {{apiUrl}}/matches/h2h/33/50?last=10
+
+### Scenario 5: Player Search and Stats
+# 1. Search for player
+GET {{apiUrl}}/statistics/players/search?query=Haaland
+
+# 2. Get league top scorers
+GET {{apiUrl}}/statistics/top-scorers/39?season=2023
+
+### ==============================================
+### NOTES
+### ==============================================
+
+# 1. Make sure your API_FOOTBALL_KEY is set in .env file
+# 2. Free tier limits: 100 requests/day, 10 requests/minute
+# 3. Server must be running: uvicorn main:app --reload
+# 4. Base URL: http://localhost:8000
+# 5. Interactive docs: http://localhost:8000/docs
+# 6. All dates should be in YYYY-MM-DD format
+# 7. Season parameter should be a year (e.g., 2023)
+
+### ==============================================
+### END OF API TESTS
+### ==============================================

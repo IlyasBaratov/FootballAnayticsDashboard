@@ -3,9 +3,9 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from backEnd.api.dependencies import get_fixture_service
-from backEnd.services.service import FixtureService
-from backEnd.schemas.fixture import FixtureResponse, FixtureCreate, FixtureUpdate, FixtureDetailResponse
+from api.dependencies import get_fixture_service
+from services.service import FixtureService
+from schemas.fixture import FixtureResponse, FixtureCreate, FixtureUpdate, FixtureDetailResponse
 
 router = APIRouter()
 

@@ -6,16 +6,16 @@ from typing import Generator
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from backEnd.core.database import get_db
-from backEnd.models.model import League, Team, Fixture, Player
-from backEnd.repository.rep import Repository
-from backEnd.services.service import (
+from core.database import get_db
+from models.model import League, Team, Fixture, Player
+from repository.rep import Repository
+from services.service import (
     LeagueService, 
     PlayerService, 
     FixtureService, 
     TeamService
 )
-from backEnd.controllers.football_controller import FootballController
+from controllers.football_controller import FootballController
 
 
 def get_league_service(db: Session = Depends(get_db)) -> LeagueService:

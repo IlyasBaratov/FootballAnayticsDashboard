@@ -1,5 +1,5 @@
 """Services package for business logic layer."""
-from backEnd.services.service import (
+from services.service import (
     BaseService,
     LeagueService,
     TeamService,

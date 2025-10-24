@@ -4,8 +4,8 @@ Provides access to match predictions and forecasts.
 """
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from backEnd.controllers.football_controller import FootballController
-from backEnd.api.dependencies import get_football_controller
+from controllers.football_controller import FootballController
+from api.dependencies import get_football_controller
 
 router = APIRouter()
 

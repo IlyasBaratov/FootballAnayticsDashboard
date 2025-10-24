@@ -13,7 +13,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID, JSONB, ARRAY
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from backEnd.core.database import Base
+from core.database import Base
 
 
 # ---------- 1. Reference tables ----------

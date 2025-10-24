@@ -1,7 +1,7 @@
 """API routers package."""
 from fastapi import APIRouter
 
-from backEnd.api.routers import (
+from api.routers import (
     leagues, 
     teams, 
     players, 

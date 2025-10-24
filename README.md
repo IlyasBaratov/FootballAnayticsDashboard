@@ -1,55 +1,70 @@
-# Football Analytics Dashboard
+# ⚽ Football Analytics Dashboard
 
-Smart Soccer Analytics Dashboard – A modern, well-architected Python web application with PostgreSQL and Docker that ingests soccer match data and provides interactive visualizations (shot maps, player heat maps, passing networks) plus optional AI models for advanced stats such as expected goals.
+A comprehensive Football Analytics Backend built with FastAPI that integrates with **API-Football v3** to provide real-time football data, statistics, predictions, and analytics.
 
 ## 🎯 Project Overview
 
-This is a **production-ready FastAPI application** following Python best practices with:
+This is a **production-ready FastAPI application** with complete **API-Football integration** featuring:
+- 🔴 **Live match data** with real-time scores
+- 📊 **League standings** and rankings
+- 📈 **Team & player statistics**
+- 🔮 **Match predictions** and analytics
+- 🏆 **Top scorers** and assists leaders
+- ⚽ **Comprehensive match details** (events, lineups, stats)
+- 🎯 **Head-to-head** comparisons
 - Clean architecture and separation of concerns
-- RESTful API design
+- RESTful API design with auto-generated docs
 - Type-safe code with full type hints
-- Comprehensive documentation
 - Docker support for easy deployment
 
-## ✨ Features
+## ✨ Key Features
 
-- ⚽ **Comprehensive Football Data Management**
+### 🌐 API-Football Integration
+- **Live Matches** - Real-time scores and match updates
+- **Fixtures & Schedules** - Past and upcoming matches
+- **League Standings** - Up-to-date league tables
+- **Team Statistics** - Comprehensive performance metrics
+- **Player Data** - Top scorers, assists, and player search
+- **Match Predictions** - AI-powered outcome forecasts
+- **Match Details** - Events, lineups, and detailed statistics
+- **Head-to-Head** - Historical matchup analysis
+
+### 🏗️ Technical Features
+- ⚡ **Async/Await** - High-performance async operations
+- 🔄 **Smart Rate Limiting** - Automatic API rate management
+- 💾 **Intelligent Caching** - Optimized response times
+- 🔐 **Type Safety** - Full type hints throughout
+- 📚 **Auto Documentation** - Swagger UI and ReDoc
+- 🐳 **Docker Ready** - Complete containerization
+- � **Clean Architecture** - Layered design pattern
+
+### 📊 Data Management
+- ⚽ **Comprehensive Football Data**
   - Leagues, Seasons, Teams, Players
   - Fixtures, Events, Lineups
   - Player & Team Statistics
   - Standings & Transfers
-
-- 🔌 **RESTful API**
-  - Full CRUD operations for all resources
-  - Pagination support
-  - Advanced filtering
-  - Auto-generated interactive documentation
-
-- 🏗️ **Clean Architecture**
-  - Layered design (API → Service → Repository → Models)
-  - Dependency injection
-  - Generic repository pattern
-  - Type-safe throughout
-
 - 🐘 **PostgreSQL Database**
-  - Comprehensive schema
+  - Normalized schema design
   - Proper indexing and constraints
   - Connection pooling
   - Transaction management
-
-- 🐳 **Docker Support**
-  - Multi-container setup
-  - Easy deployment
-  - Development & production configs
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Python 3.10+
 - PostgreSQL 12+
+- API-Football API Key ([Get free key](https://www.api-football.com/))
 - Docker & Docker Compose (optional)
 
 ### Installation
+
+#### Option 1: Quick Start (5 minutes)
+
+See **[QUICK_START.md](./QUICK_START.md)** for the fastest way to get started!
+
+#### Option 2: Manual Setup
 
 1. **Clone the repository**
    ```bash
@@ -57,7 +72,12 @@ This is a **production-ready FastAPI application** following Python best practic
    cd FootballAnayticsDashboard
    ```
 
-2. **Set up Python environment**
+2. **Get API-Football API Key**
+   - Visit [API-Football](https://www.api-football.com/)
+   - Sign up for a free account
+   - Get your API key from dashboard
+
+3. **Set up Python environment**
    ```bash
    python -m venv venv
    # Windows
@@ -66,23 +86,36 @@ This is a **production-ready FastAPI application** following Python best practic
    source venv/bin/activate
    ```
 
-3. **Install dependencies**
+4. **Install dependencies**
    ```bash
-   pip install -r backEnd/requirements.txt
+   cd backEnd
+   pip install -r requirements.txt
    ```
 
-4. **Configure environment**
+5. **Configure environment**
    ```bash
-   copy .env.example .env
-   # Edit .env with your database credentials
+   # Copy template
+   cp ../.env.example ../.env
+   
+   # Edit .env and add your API key
+   # API_FOOTBALL_KEY=your_actual_api_key_here
    ```
 
-5. **Run the application**
+6. **Setup database**
    ```bash
-   python run.py
+   # Create database
+   createdb football_analytics
+   
+   # Run schema
+   psql -d football_analytics -f ../db/db_schema.sql
    ```
 
-6. **Access the API**
+7. **Run the application**
+   ```bash
+   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   ```
+
+8. **Access the API**
    - API: http://localhost:8000
    - Interactive Docs: http://localhost:8000/docs
    - ReDoc: http://localhost:8000/redoc
@@ -134,15 +167,41 @@ FootballAnayticsDashboard/
 
 ## 📚 API Documentation
 
+### Complete Documentation
+- 📖 **[API_DOCUMENTATION.md](./API_DOCUMENTATION.md)** - Complete API reference with examples
+- 🚀 **[QUICK_START.md](./QUICK_START.md)** - Get started in 5 minutes
+- 📊 **[BACKEND_SUMMARY.md](./BACKEND_SUMMARY.md)** - Architecture and feature overview
+
 ### Base URL
 `http://localhost:8000/api/v1`
 
-### Available Endpoints
+### 🔴 Live & Real-Time Data
 
-#### System
-- `GET /` - Health check
-- `GET /health` - Health status
-- `GET /api/v1/test-db` - Database connectivity test
+#### Matches & Fixtures
+- `GET /api/v1/matches/live` - All live matches
+- `GET /api/v1/matches/today` - Today's matches
+- `GET /api/v1/matches/date/{date}` - Matches by date
+- `GET /api/v1/matches/league/{league_id}` - League fixtures
+- `GET /api/v1/matches/team/{team_id}` - Team fixtures
+- `GET /api/v1/matches/{fixture_id}` - Match details
+- `GET /api/v1/matches/{fixture_id}/statistics` - Match stats
+- `GET /api/v1/matches/{fixture_id}/events` - Goals, cards, subs
+- `GET /api/v1/matches/{fixture_id}/lineups` - Team lineups
+- `GET /api/v1/matches/h2h/{team1}/{team2}` - Head-to-head
+
+#### Standings
+- `GET /api/v1/standings/{league_id}` - League table/standings
+
+#### Statistics
+- `GET /api/v1/statistics/team/{team_id}` - Team statistics
+- `GET /api/v1/statistics/top-scorers/{league_id}` - Top scorers
+- `GET /api/v1/statistics/top-assists/{league_id}` - Top assists
+- `GET /api/v1/statistics/players/search` - Search players
+
+#### Predictions
+- `GET /api/v1/predictions/{fixture_id}` - Match predictions
+
+### 📊 Database CRUD Operations
 
 #### Leagues
 - `GET /api/v1/leagues` - List leagues

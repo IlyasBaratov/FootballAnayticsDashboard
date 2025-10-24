@@ -3,9 +3,9 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from backEnd.api.dependencies import get_player_service
-from backEnd.services.service import PlayerService
-from backEnd.schemas.player import PlayerResponse, PlayerCreate, PlayerUpdate
+from api.dependencies import get_player_service
+from services.service import PlayerService
+from schemas.player import PlayerResponse, PlayerCreate, PlayerUpdate
 
 router = APIRouter()
 

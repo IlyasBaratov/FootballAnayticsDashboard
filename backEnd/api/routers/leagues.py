@@ -3,9 +3,9 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from backEnd.api.dependencies import get_league_service
-from backEnd.services.service import LeagueService
-from backEnd.schemas.league import LeagueResponse, LeagueCreate, LeagueUpdate
+from api.dependencies import get_league_service
+from services.service import LeagueService
+from schemas.league import LeagueResponse, LeagueCreate, LeagueUpdate
 
 router = APIRouter()
 

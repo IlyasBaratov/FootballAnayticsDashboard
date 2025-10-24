@@ -11,8 +11,8 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from sqlalchemy import select, or_
 
-from backEnd.repository.rep import Repository
-from backEnd.models.model import Team, League, Player, Fixture, Season
+from repository.rep import Repository
+from models.model import Team, League, Player, Fixture, Season
 
 M = TypeVar('M')
 Incoming = Union[Dict[str, Any], BaseModel, Any]
@@ -211,7 +211,7 @@ class FixtureService(BaseService[Fixture]):
             Fixture with eagerly loaded relationships or None
         """
         from sqlalchemy.orm import joinedload
-        from backEnd.models.model import Event, Lineup, PlayerStat, TeamStat
+        from models.model import Event, Lineup, PlayerStat, TeamStat
         
         statement = (
             select(Fixture)
@@ -239,7 +239,7 @@ class PlayerService(BaseService[Player]):
         Returns:
             Current team or None
         """
-        from backEnd.models.model import PlayerTeamSeason
+        from models.model import PlayerTeamSeason
         
         statement = (
             select(Team)

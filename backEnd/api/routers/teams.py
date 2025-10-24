@@ -3,9 +3,9 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from backEnd.api.dependencies import get_team_service
-from backEnd.services.service import TeamService
-from backEnd.schemas.team import TeamResponse, TeamCreate, TeamUpdate
+from api.dependencies import get_team_service
+from services.service import TeamService
+from schemas.team import TeamResponse, TeamCreate, TeamUpdate
 
 router = APIRouter()
 

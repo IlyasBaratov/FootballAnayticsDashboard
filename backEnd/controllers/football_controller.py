@@ -8,12 +8,12 @@ from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 
-from backEnd.services.api_football_client import APIFootballClient, get_api_football_client
-from backEnd.models.model import (
+from services.api_football_client import APIFootballClient, get_api_football_client
+from models.model import (
     League, Season, Team, Venue, Fixture, Player, 
     Standing, Coach, PlayerTeamSeason
 )
-from backEnd.repository.rep import Repository
+from repository.rep import Repository
 
 logger = logging.getLogger(__name__)
 

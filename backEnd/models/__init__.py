@@ -1,5 +1,5 @@
 """Models package for ORM models."""
-from backEnd.models.model import (
+from models.model import (
     Base,
     League,
     Season,
