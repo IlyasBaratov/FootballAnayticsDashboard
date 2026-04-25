@@ -99,13 +99,25 @@ See **[QUICK_START.md](./QUICK_START.md)** for the fastest way to get started!
    
    # Edit .env and add your API key
    # API_FOOTBALL_KEY=your_actual_api_key_here
+
+   # If you're running the API locally (uvicorn) and PostgreSQL locally or via Docker on your machine,
+   # set DATABASE_URL host to localhost (docker-compose uses host `db` only when the API runs in the compose network)
+   # DATABASE_URL=postgresql+psycopg2://postgres:postgres@localhost:5432/football_analytics
    ```
 
 6. **Setup database**
+   **Option A (Docker, recommended):** brings up Postgres and auto-runs the schema from `db/db_schema.sql`.
+   ```bash
+   # Ensure you have a .env (copy from .env.example) with POSTGRES_* variables set
+   # If localhost:5432 is already in use (common on Windows/WSL), set POSTGRES_PORT=5433 in your .env
+   docker-compose up -d db
+   ```
+
+   **Option B (Local PostgreSQL):** requires PostgreSQL command-line tools (`createdb`, `psql`) installed and on your PATH.
    ```bash
    # Create database
    createdb football_analytics
-   
+
    # Run schema
    psql -d football_analytics -f ../db/db_schema.sql
    ```
